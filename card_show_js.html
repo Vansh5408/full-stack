@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Colorful Profile Card</title>
+
+<style>
+    body{
+        margin: 0;
+        padding: 20px;
+        min-height: 100vh;
+        font-family: 'Segoe UI', sans-serif;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        display: flex;
+        gap: 40px;
+        align-items: flex-start;
+    }
+
+    /* FORM */
+    .form{
+        background: white;
+        padding: 15px;
+        border-radius: 12px;
+        width: 220px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    }
+
+    #text{
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    input{
+        padding: 8px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+        outline: none;
+    }
+
+    input[type="submit"]{
+        background: linear-gradient(135deg, #ff512f, #f09819);
+        border: none;
+        color: white;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    /* PROFILE CARD */
+    .profile{
+        width: 280px;
+        padding: 20px;
+        border-radius: 20px;
+        background: linear-gradient(135deg, #43cea2, #185a9d);
+        color: white;
+        box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+        animation: pop 0.4s ease;
+    }
+
+    @keyframes pop {
+        from { transform: scale(0.9); opacity: 0; }
+        to { transform: scale(1); opacity: 1; }
+    }
+
+    .photo{
+        height: 90px;
+        width: 90px;
+        border-radius: 50%;
+        padding: 4px;
+        background: linear-gradient(135deg, #ff512f, #dd2476);
+        margin-bottom: 15px;
+    }
+
+    .photo img{
+        height: 100%;
+        width: 100%;
+        border-radius: 50%;
+        object-fit: cover;
+        background: white;
+    }
+
+    .about h1{
+        margin: 0;
+        font-size: 22px;
+    }
+
+    .about p{
+        margin-top: 8px;
+        font-size: 14px;
+        line-height: 1.4;
+        color: #e9f5ff;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="form">
+    <form id="text">
+        <input type="text" placeholder="Name" required>
+        <input type="text" placeholder="Email">
+        <input type="text" placeholder="About">
+        <input type="text" placeholder="Profile Image URL">
+        <input type="submit" value="Create Card">
+    </form>
+</div>
+
+<div id="card-container"></div>
+
+<script>
+    let form = document.querySelector("form");
+    let inputs = document.querySelectorAll("input");
+    let container = document.querySelector("#card-container");
+
+    form.addEventListener("submit", function(e){
+        e.preventDefault();
+
+        container.innerHTML = ""; // remove old card
+
+        let profile = document.createElement("div");
+        profile.classList.add("profile");
+
+        let photo = document.createElement("div");
+        photo.classList.add("photo");
+
+        let img = document.createElement("img");
+        img.src = inputs[3].value || "https://via.placeholder.com/150";
+        photo.appendChild(img);
+
+        let about = document.createElement("div");
+        about.classList.add("about");
+
+        let h1 = document.createElement("h1");
+        h1.textContent = inputs[0].value;
+
+        let p = document.createElement("p");
+        p.textContent = inputs[2].value;
+
+        about.appendChild(h1);
+        about.appendChild(p);
+
+        profile.appendChild(photo);
+        profile.appendChild(about);
+
+        container.appendChild(profile);
+
+        inputs.forEach(input => {
+    if (input.type !== "submit") {
+        input.value = "";
+    }
+});
+
+    });
+</script>
+
+</body>
+</html>
